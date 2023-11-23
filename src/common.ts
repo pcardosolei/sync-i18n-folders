@@ -4,7 +4,7 @@ import * as path from "path";
 const JSON_EXTENSION = ".json";
 
 export function getDirectories(folderName: string) {
-  if (checkIfDirectoryExists(folderName)) {
+  if (fs.existsSync(folderName)) {
     const paths = fs.readdirSync(folderName);
     return paths;
   }
@@ -24,16 +24,11 @@ export function getJSONDirectoryFiles(languageFolderName: string) {
   );
 }
 
-function checkIfDirectoryExists(folderName: string) {
-  if (!fs.existsSync(folderName)) {
-    return false;
-  }
-  return true;
-}
-
 export function readFileToJSON(filename: string) {
   const file = fs.readFileSync(filename, "utf-8");
   return JSON.parse(file);
 }
 
-// export function getAllKeysJson()
+export function checkIfFileExists(filename: string) {
+  const fileExists = fs.existsSync(filename);
+}

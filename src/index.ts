@@ -41,10 +41,10 @@ export default function sync({
     }
   }
 
-  let targetLanguage: string;
-  let hasAnyErrors = false;
-  let hasAnyChanges = false;
-  let hasValueChanges = false;
+  // let targetLanguage: string;
+  // let hasAnyErrors = false;
+  // let hasAnyChanges = false;
+  // let hasValueChanges = false;
 
   for (const currentDirectory in Object.values(directories)) {
     console.log(currentDirectory);
@@ -77,22 +77,22 @@ export default function sync({
     // hasAnyChanges = hasAnyChanges || changedFiles.length > 0;
   }
 
-  if (hasAnyErrors) {
-    throw new Error("[i18next-json-sync] found keys unsafe to synchronize");
-  }
+  // if (hasAnyErrors) {
+  //   throw new Error("[i18next-json-sync] found keys unsafe to synchronize");
+  // }
 
-  if (isReportMode) {
-    if (hasValueChanges) {
-      throw new Error(
-        "[i18next-json-sync] check failed -- keys are out of sync. Run again without check mode to synchronize files"
-      );
-    }
-    if (hasAnyChanges) {
-      throw new Error(
-        "[i18next-json-sync] check failed -- files have unordered keys or unexpected whitespace. Run again without check mode to correct files"
-      );
-    }
-  }
+  // if (isReportMode) {
+  //   if (hasValueChanges) {
+  //     throw new Error(
+  //       "[i18next-json-sync] check failed -- keys are out of sync. Run again without check mode to synchronize files"
+  //     );
+  //   }
+  //   if (hasAnyChanges) {
+  //     throw new Error(
+  //       "[i18next-json-sync] check failed -- files have unordered keys or unexpected whitespace. Run again without check mode to correct files"
+  //     );
+  //   }
+  // }
 
   // function normalizeLanguageFromFilename(filename: string) {
   //   return path.basename(filename, ".json").replace(/-/g, "_").toLowerCase();
