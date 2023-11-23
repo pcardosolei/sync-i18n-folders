@@ -1,0 +1,25 @@
+{
+  "name": "sync-i18n-folders",
+  "version": "1.0.0",
+  "description": "Package to sync i18n folders",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pcardosolei/sync-i18n-folders.git"
+  },
+  "keywords": [
+    "i18n",
+    "sync",
+    "folders",
+    "languages"
+  ],
+  "author": "Paulo Cardoso",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pcardosolei/sync-i18n-folders/issues"
+  },
+  "homepage": "https://github.com/pcardosolei/sync-i18n-folders#readme"
+}
