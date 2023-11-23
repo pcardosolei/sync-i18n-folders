@@ -1,0 +1,17 @@
+{
+  "test": "Test",
+  "info": {
+    "title": "Title",
+    "description": "Description"
+  },
+  "objectives": [
+    {
+      "title": "Objective One",
+      "description": "Description One"
+    },
+    {
+      "title": "Objective Two",
+      "description": "Description Two"
+    }
+  ]
+}
