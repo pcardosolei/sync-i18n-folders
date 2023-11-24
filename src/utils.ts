@@ -3,7 +3,7 @@ export function isObject(value: any): value is { [key: string]: string } {
 }
 
 export function isArray(value: any): value is { [key: string]: string } {
-  return getTypeName(value) === "Array";
+  return Array.isArray(value);
 }
 export function areSameTypes(value: any, otherValue: any) {
   return getTypeName(value) === getTypeName(otherValue);

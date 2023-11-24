@@ -32,3 +32,8 @@ export function readFileToJSON(filename: string) {
 export function checkIfFileExists(filename: string) {
   const fileExists = fs.existsSync(filename);
 }
+
+/**
+ * Save File
+ */
+export function saveJSON(filename: string, opts: {}) {}
