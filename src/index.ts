@@ -41,7 +41,6 @@ export default function sync({
   );
 
   for (const file of primaryLanguageFiles) {
-    console.log("-----", file);
     const sourceFile = readFileToJSON(`${folder}/${primaryLanguage}/${file}`);
     for (const language of secondaryLanguages) {
       const targetFileName = `${folder}/${language}/${file}`;

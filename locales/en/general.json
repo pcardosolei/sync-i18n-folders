@@ -5,6 +5,7 @@
     "description": "Description"
   },
   "objectives": [
+    "test",
     {
       "title": "Objective One",
       "description": "Description One"
@@ -12,6 +13,7 @@
     {
       "title": "Objective Two",
       "description": "Description Two"
-    }
+    },
+    ["test2", "aaa", { "nested_title": "a" }]
   ]
 }

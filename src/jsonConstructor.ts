@@ -11,10 +11,6 @@ class JSONConstructor {
   }
 
   public syncObjects(source: JSONObject, target: JSONObject) {
-    this.mergeKeys(source, target);
-  }
-
-  public mergeKeys(source: JSONObject, target: JSONObject) {
     for (const key of Object.keys(source)) {
       this.mergeKey(source, target, key);
     }
@@ -44,27 +40,46 @@ class JSONConstructor {
     }
   }
 
-  public copyArray(source: JSONObject, target: JSONObject, key: string) {
-    const targetArray = target[key] as unknown as JSONArray;
-    const sourceArray = source[key] as unknown as JSONArray;
+  public copyArray(source: JSONArray, target: JSONArray): JSONArray {
+    // change this until there is a way to control items in array like an id
+    if (this.generateBoilerplate || (target && target.length > 0)) return [];
 
-    if (this.generateBoilerplate) return (target[key] = []);
-    if (!targetArray || targetArray.length == 0) {
-      // change this later
-      target[key] = source[key];
-    } else {
-      // do nothing for now
+    const targetArr = [];
+    for (let item of source) {
+      if (isArray(item)) {
+        const newArray = this.copyArray(
+          item as unknown as JSONArray,
+          [] as JSONArray
+        );
+        targetArr.push(newArray);
+      } else if (isObject(item)) {
+        const target = {} as JSONObject;
+        this.syncObjects(item, target);
+        targetArr.push(target);
+      } else {
+        targetArr.push(this.copyValue(item as unknown as string, ""));
+      }
     }
+
+    return targetArr as JSONArray;
   }
 
-  public manipulateTarget(source: JSONObject, target: JSONObject, key: string) {
+  public manipulateTarget(
+    source: JSONObject,
+    target: JSONObject,
+    key: string
+  ): any {
     const sourceValue = source[key as keyof Object];
+    const targetValue = target[key as keyof Object];
 
     if (isObject(sourceValue)) {
-      target[key as keyof typeof target] = {} satisfies JSONObject;
-      this.syncObjects(sourceValue, target[key] as JSONObject);
+      target[key as keyof typeof target] = {} as JSONObject;
+      return this.syncObjects(sourceValue, target[key] as JSONObject);
     } else if (isArray(sourceValue)) {
-      this.copyArray(source, target, key);
+      target[key] = this.copyArray(
+        sourceValue as unknown as JSONArray,
+        targetValue as unknown as JSONArray
+      );
     } else {
       target[key] = this.copyValue(sourceValue as unknown as string, "");
     }
