@@ -66,5 +66,5 @@ export default function sync({
 sync({
   folder: "./locales",
   outputDirectory: "./output-sync",
-  generateBoilerplate: true,
+  generateBoilerplate: false,
 });

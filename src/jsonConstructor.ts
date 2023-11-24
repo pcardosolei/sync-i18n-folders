@@ -31,49 +31,42 @@ class JSONConstructor {
         } else if (isObject(sourceValue)) {
           this.syncObjects(sourceValue, targetValue);
         } else {
-          // ignoring the plurals - need to include those
           target[key] = this.copyValue(
-            source as unknown as string,
-            target as unknown as string
+            sourceValue as unknown as string,
+            targetValue as unknown as string
           );
         }
       } else {
         new Error("mismatch on types");
       }
     } else {
-      target[key] = this.copyValue(
-        source as unknown as string,
-        target as unknown as string
-      );
+      this.manipulateTarget(source, target, key);
     }
   }
 
-  public copyEmptyArray(source: JSONObject, target: JSONObject, key: string) {
+  public copyArray(source: JSONObject, target: JSONObject, key: string) {
     const targetArray = target[key] as unknown as JSONArray;
     const sourceArray = source[key] as unknown as JSONArray;
 
+    if (this.generateBoilerplate) return (target[key] = []);
     if (!targetArray || targetArray.length == 0) {
       // change this later
-      console.log("here");
       target[key] = source[key];
     } else {
-      // maintain arrays.
+      // do nothing for now
     }
   }
 
-  public compare(source: JSONObject, target: JSONObject, key: string) {
+  public manipulateTarget(source: JSONObject, target: JSONObject, key: string) {
     const sourceValue = source[key as keyof Object];
-    const targetValue = target[key as keyof Object];
+
     if (isObject(sourceValue)) {
       target[key as keyof typeof target] = {} satisfies JSONObject;
       this.syncObjects(sourceValue, target[key] as JSONObject);
     } else if (isArray(sourceValue)) {
-      this.copyEmptyArray(source, target, key);
+      this.copyArray(source, target, key);
     } else {
-      target[key] = this.copyValue(
-        sourceValue as unknown as string,
-        targetValue as unknown as string
-      );
+      target[key] = this.copyValue(sourceValue as unknown as string, "");
     }
   }
 
