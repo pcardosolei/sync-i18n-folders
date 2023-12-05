@@ -28,12 +28,3 @@ export function readFileToJSON(filename: string) {
   const file = fs.readFileSync(filename, "utf-8");
   return JSON.parse(file);
 }
-
-export function checkIfFileExists(filename: string) {
-  const fileExists = fs.existsSync(filename);
-}
-
-/**
- * Save File
- */
-export function saveJSON(filename: string, opts: {}) {}

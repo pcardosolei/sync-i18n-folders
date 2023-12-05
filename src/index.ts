@@ -3,7 +3,7 @@ import {
   getJSONDirectoryFiles,
   readFileToJSON,
 } from "./common";
-import { ArgumentOptions, JSONObject } from "./types";
+import { ArgumentOptions } from "./types";
 import FileConstructor from "./fileConstructor";
 import * as fs from "fs";
 import JSONConstructor from "./jsonConstructor";
@@ -61,9 +61,3 @@ export default function sync({
     pr.resolvedOptions;
   }
 }
-
-sync({
-  folder: "./locales",
-  outputDirectory: "./output-sync",
-  generateBoilerplate: false,
-});
