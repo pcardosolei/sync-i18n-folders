@@ -39,15 +39,10 @@ export default function sync({
 
       const checkTargetFile = fs.existsSync(targetFileName);
       let targetFile = {};
-      if (!checkTargetFile) {
-        console.log(`need to create file - ${targetFileName} as it does not exist`);
-      } else {
-        targetFile = readFileToJSON(targetFileName);
-      }
+      if (checkTargetFile) targetFile = readFileToJSON(targetFileName);
+
       jsonConstructor.syncObjects(sourceFile, targetFile);
       fileConstrutor.flushToDisk(file, language, targetFile);
     }
-    const pr = new Intl.PluralRules();
-    pr.resolvedOptions;
   }
 }
