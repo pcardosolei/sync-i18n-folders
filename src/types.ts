@@ -1,4 +1,4 @@
-export type LineEndings = "LF" | "CRLF";
+export type LineEndings = 'LF' | 'CRLF';
 
 export interface ArgumentOptions {
   /** Audit files in memory instead of changing them on the filesystem and throw an error if any changes would be made */
@@ -6,7 +6,7 @@ export interface ArgumentOptions {
   /** Locale folders where all the languages are hosted */
   folder: string;
   /** Primary localization language. Other language files will be changed to match */
-  primary?: string;
+  primaryLanguage?: string;
   /** Language files to create if they don't exist, e.g. ['es, 'pt-BR', 'fr'] */
   createResources?: string[];
   /** Space value used for JSON.stringify when writing JSON files to disk */

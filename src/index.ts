@@ -1,20 +1,16 @@
-import {
-  getDirectories,
-  getJSONDirectoryFiles,
-  readFileToJSON,
-} from "./common";
-import { ArgumentOptions } from "./types";
-import FileConstructor from "./fileConstructor";
-import * as fs from "fs";
-import JSONConstructor from "./jsonConstructor";
+import { getDirectories, getJSONDirectoryFiles, readFileToJSON } from './utils';
+import { ArgumentOptions } from './types';
+import * as fs from 'fs';
+import JSONConstructor from './jsonConstructor';
+import FileConstructor from './fileConstructor';
 
 export default function sync({
   check: isReportMode = false,
   folder,
-  primary: primaryLanguage = "en",
-  createResources: createFiles = [],
+  primaryLanguage = 'en',
+  createResources = [],
   space,
-  lineEndings = "LF",
+  lineEndings = 'LF',
   finalNewline = false,
   generateBoilerplate = false,
   outputDirectory,
@@ -32,14 +28,10 @@ export default function sync({
     console.warn(`${primaryLanguage} does not exist`);
   }
 
-  const primaryLanguageFiles = getJSONDirectoryFiles(
-    `${folder}/${primaryLanguage}`
-  );
+  const primaryLanguageFiles = getJSONDirectoryFiles(`${folder}/${primaryLanguage}`);
 
-  const secondaryLanguages = directories.filter(
-    (language) => language != primaryLanguage
-  );
-
+  let existingLanguages = directories.filter((language) => language != primaryLanguage);
+  let secondaryLanguages = new Set([...existingLanguages, ...createResources]);
   for (const file of primaryLanguageFiles) {
     const sourceFile = readFileToJSON(`${folder}/${primaryLanguage}/${file}`);
     for (const language of secondaryLanguages) {
@@ -48,9 +40,7 @@ export default function sync({
       const checkTargetFile = fs.existsSync(targetFileName);
       let targetFile = {};
       if (!checkTargetFile) {
-        console.log(
-          `need to create file - ${targetFileName} as it does not exist`
-        );
+        console.log(`need to create file - ${targetFileName} as it does not exist`);
       } else {
         targetFile = readFileToJSON(targetFileName);
       }

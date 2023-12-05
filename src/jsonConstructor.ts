@@ -1,12 +1,10 @@
-import { ArgumentOptions, JSONArray, JSONObject, JSONValue } from "./types";
-import { areSameTypes, isArray, isObject } from "./utils";
+import { ArgumentOptions, JSONArray, JSONObject } from './types';
+import { areSameTypes, isArray, isObject } from './utils';
 
 class JSONConstructor {
   private generateBoilerplate: boolean = false;
 
-  constructor({
-    generateBoilerplate,
-  }: Pick<ArgumentOptions, "generateBoilerplate">) {
+  constructor({ generateBoilerplate }: Pick<ArgumentOptions, 'generateBoilerplate'>) {
     this.generateBoilerplate = generateBoilerplate || false;
   }
 
@@ -27,13 +25,10 @@ class JSONConstructor {
         } else if (isObject(sourceValue)) {
           this.syncObjects(sourceValue, targetValue);
         } else {
-          target[key] = this.copyValue(
-            sourceValue as unknown as string,
-            targetValue as unknown as string
-          );
+          target[key] = this.copyValue(sourceValue as unknown as string, targetValue as unknown as string);
         }
       } else {
-        new Error("mismatch on types");
+        new Error('mismatch on types');
       }
     } else {
       this.manipulateTarget(source, target, key);
@@ -47,28 +42,21 @@ class JSONConstructor {
     const targetArr = [];
     for (let item of source) {
       if (isArray(item)) {
-        const newArray = this.copyArray(
-          item as unknown as JSONArray,
-          [] as JSONArray
-        );
+        const newArray = this.copyArray(item as unknown as JSONArray, [] as JSONArray);
         targetArr.push(newArray);
       } else if (isObject(item)) {
         const target = {} as JSONObject;
         this.syncObjects(item, target);
         targetArr.push(target);
       } else {
-        targetArr.push(this.copyValue(item as unknown as string, ""));
+        targetArr.push(this.copyValue(item as unknown as string, ''));
       }
     }
 
     return targetArr as JSONArray;
   }
 
-  public manipulateTarget(
-    source: JSONObject,
-    target: JSONObject,
-    key: string
-  ): any {
+  public manipulateTarget(source: JSONObject, target: JSONObject, key: string): any {
     const sourceValue = source[key as keyof Object];
     const targetValue = target[key as keyof Object];
 
@@ -76,17 +64,14 @@ class JSONConstructor {
       target[key as keyof typeof target] = {} as JSONObject;
       return this.syncObjects(sourceValue, target[key] as JSONObject);
     } else if (isArray(sourceValue)) {
-      target[key] = this.copyArray(
-        sourceValue as unknown as JSONArray,
-        targetValue as unknown as JSONArray
-      );
+      target[key] = this.copyArray(sourceValue as unknown as JSONArray, targetValue as unknown as JSONArray);
     } else {
-      target[key] = this.copyValue(sourceValue as unknown as string, "");
+      target[key] = this.copyValue(sourceValue as unknown as string, '');
     }
   }
 
   public copyValue(sourceValue: string, targetValue: string): string {
-    if (this.generateBoilerplate) return "";
+    if (this.generateBoilerplate) return '';
     return targetValue ? targetValue : sourceValue;
   }
 }
